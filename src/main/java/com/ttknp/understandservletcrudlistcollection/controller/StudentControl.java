@@ -15,10 +15,12 @@ import java.util.Map;
 
 @Controller
 public class StudentControl {
-    private Logger logger = LoggerFactory.getLogger(StudentControl.class);
-    private StudentService studentService = new StudentService();
+    private Logger logger;
+    private StudentService studentService;
 
     public StudentControl() {
+        studentService = new StudentService();
+        logger = LoggerFactory.getLogger(StudentControl.class);
     }
 
     @GetMapping({"", "/"})

@@ -41,10 +41,10 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- We should take special note that Undertow does not support JSP when used as an Embedded Servlet Container.
-
-Next, we need to include the tomcat-embed-jasper dependency to allow our application to compile and render JSP pages:
--->
+           <!--
+            We should take special note that Undertow does not support JSP when used as an Embedded Servlet Container.
+            Next, we need to include the tomcat-embed-jasper dependency to allow our application to compile and render JSP pages:
+            -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>

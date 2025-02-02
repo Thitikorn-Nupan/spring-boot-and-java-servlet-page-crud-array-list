@@ -38,7 +38,10 @@ public class StudentWebServletControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.setAttribute("students",studentService.getStudentList());
+
+        String emailFromSession = req.getSession().getAttribute("email").toString();
+        req.setAttribute("email", emailFromSession);
+        req.setAttribute("students", studentService.getStudentList());
         req.getRequestDispatcher("/WEB-INF/views/students_table.jsp").forward(req, resp);
     }
 
@@ -49,7 +52,7 @@ public class StudentWebServletControl extends HttpServlet {
         if (code.equals("read")) {
             int id = Integer.parseInt(req.getParameter("id"));
             Student student = studentService.getStudentById(id);
-            req.setAttribute("student",student);
+            req.setAttribute("student", student);
             req.getRequestDispatcher("/WEB-INF/views/student_form_edit.jsp").forward(req, resp);
         }
         if (code.equals("form")) {
@@ -62,10 +65,10 @@ public class StudentWebServletControl extends HttpServlet {
             doDelete(req, resp);
         }
         if (code.equals("create")) {
-            String fullname = (String)req.getParameter("fullname");
-            int age = Integer.parseInt((String)req.getParameter("age"));
-            int year = Integer.parseInt((String)req.getParameter("year"));
-            String description = (String)req.getParameter("description");
+            String fullname = (String) req.getParameter("fullname");
+            int age = Integer.parseInt((String) req.getParameter("age"));
+            int year = Integer.parseInt((String) req.getParameter("year"));
+            String description = (String) req.getParameter("description");
             Student studentNew = new Student(0, fullname, age, year, description);
             studentService.addStudent(studentNew);
             resp.sendRedirect("/students.table");
@@ -75,12 +78,12 @@ public class StudentWebServletControl extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        String fullname = (String)req.getParameter("fullname");
-        int age = Integer.parseInt((String)req.getParameter("age"));
-        int year = Integer.parseInt((String)req.getParameter("year"));
-        String description = (String)req.getParameter("description");
+        String fullname = (String) req.getParameter("fullname");
+        int age = Integer.parseInt((String) req.getParameter("age"));
+        int year = Integer.parseInt((String) req.getParameter("year"));
+        String description = (String) req.getParameter("description");
         Student studentNew = new Student(0, fullname, age, year, description);
-        studentService.updateStudent(studentNew,id);
+        studentService.updateStudent(studentNew, id);
         resp.sendRedirect("/students.table");
     }
 

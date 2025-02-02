@@ -5,14 +5,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    <%--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>--%>
+    <%--  use bootstrap depenency instead cdn ** now bootstrap variables you can see auto variable --%>
+    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <title>JSP</title>
 </head>
 <body>
+<%-- Way to add jsp page work as component --%>
+<%@ include file="common/navbar.jsp" %>
 <%--
   *** Comment in jsp file
   // when you write java code it will work on <%! .... %>
@@ -22,7 +26,8 @@
 <%
     List<Student> studentList = (List<Student>) request.getAttribute("students");
 %>
-<div class="container" style="max-width: 700px">
+<div class="container mt-4" style="max-width: 700px">
+    <h2 style="display: flex" class="alert alert-light justify-content-center">Welcome back ${email}</h2>
     <table class="table table-dark">
         <thead>
         <tr>
@@ -71,7 +76,9 @@
     <form action="/students.table" method="post">
         <input type="hidden" name="code" value="form">
         <button type="submit" class="btn btn-success">Add</button>
+        <a href="${pageContext.request.contextPath}/logout" class="btn btn-danger">Logout</a>
     </form>
+
 
 </div>
 </body>

@@ -19,78 +19,100 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-// *** @WebServlet annotation work same @Controller
-// *** doGet,Post,Put,... work same @Get,Post,Put,...Mapping
+// *** @WebServlet annotation work same @Controller *** doGet,doPost,doPut,... work same @Get,Post,Put,...Mapping
 @WebServlet(
-        urlPatterns = {"/students.table"},
+        urlPatterns = {"/students.table","/students"},
         name = "StudentWebServletControl" // name work as bean's name
 )
 public class StudentWebServletControl extends HttpServlet {
 
-    private Logger logger;
-    private StudentService studentService;
+    private final Logger logger;
+    private final StudentService studentService;
 
     public StudentWebServletControl() {
         studentService = new StudentService();
         logger = LoggerFactory.getLogger(StudentWebServletControl.class);
     }
 
+    // Http GET
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-
-        String emailFromSession = req.getSession().getAttribute("email").toString();
-        req.setAttribute("email", emailFromSession);
-        req.setAttribute("students", studentService.getStudentList());
-        req.getRequestDispatcher("/WEB-INF/views/students_table.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // set req/res
+        String emailFromSession = request.getSession().getAttribute("email").toString();
+        response.setContentType("text/html");
+        // set up data to jsp file tru HttpServletRequest class ,
+        // you can get data by request.getAttribute("students"), request.getAttribute("email")
+        request.setAttribute("email", emailFromSession);
+        request.setAttribute("students", studentService.getStudentList());
+        request
+                // RequestDispatcher object that acts as a wrapper for the resource located at the given path
+                // 1 Parameter
+                // path : a String specifying the pathname to the resource. If it is relative, it must be relative against the current servlet.
+                .getRequestDispatcher("/WEB-INF/views/students_table.jsp")
+                // Forwards a request from a servlet to another resource (servlet, JSP file, or HTML file) on the server.
+                // This method allows one servlet to do preliminary processing of a request and another resource to generate the response.
+                // 2 Parameters
+                // request : a ServletRequest object that represents the request the client makes of the servlet (client req)
+                // response : object that represents the response the servlet returns to the client (client response)
+                .forward(request, response);
     }
 
+    // Http POST ** manage logic
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String code = req.getParameter("code");
-        // logger.debug(code);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String code = request.getParameter("code");
         if (code.equals("read")) {
-            int id = Integer.parseInt(req.getParameter("id"));
+            int id = Integer.parseInt(request.getParameter("id"));
             Student student = studentService.getStudentById(id);
-            req.setAttribute("student", student);
-            req.getRequestDispatcher("/WEB-INF/views/student_form_edit.jsp").forward(req, resp);
+            // set up data to jsp file tru HttpServletRequest class ,
+            // you can get data by request.getAttribute("students"), request.getAttribute("email")
+            request.setAttribute("student", student);
+            request
+                    // RequestDispatcher object that acts as a wrapper for the resource located at the given path
+                    .getRequestDispatcher("/WEB-INF/views/student_form_edit.jsp")
+                    // Forwards a request from a servlet to another resource (servlet, JSP file, or HTML file) on the server.
+                    .forward(request, response);
         }
         if (code.equals("form")) {
-            req.getRequestDispatcher("/WEB-INF/views/student_form_add.jsp").forward(req, resp);
+            request.getRequestDispatcher("/WEB-INF/views/student_form_add.jsp").forward(request, response);
         }
         if (code.equals("update")) {
-            doPut(req, resp);
+            doPut(request, response);
         }
         if (code.equals("delete")) {
-            doDelete(req, resp);
+            doDelete(request, response);
         }
         if (code.equals("create")) {
-            String fullname = (String) req.getParameter("fullname");
-            int age = Integer.parseInt((String) req.getParameter("age"));
-            int year = Integer.parseInt((String) req.getParameter("year"));
-            String description = (String) req.getParameter("description");
-            Student studentNew = new Student(0, fullname, age, year, description);
+            // it's on http post
+            Student studentNew = getStudentFromReq(request);
             studentService.addStudent(studentNew);
-            resp.sendRedirect("/students.table");
+            response.sendRedirect("/students.table");
         }
     }
 
+    // Http PUT
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        String fullname = (String) req.getParameter("fullname");
-        int age = Integer.parseInt((String) req.getParameter("age"));
-        int year = Integer.parseInt((String) req.getParameter("year"));
-        String description = (String) req.getParameter("description");
-        Student studentNew = new Student(0, fullname, age, year, description);
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Student studentNew = getStudentFromReq(request);
         studentService.updateStudent(studentNew, id);
-        resp.sendRedirect("/students.table");
+        response.sendRedirect("/students.table");
     }
 
+    // Http DELETE
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         studentService.deleteStudent(id);
         resp.sendRedirect("/students.table");
+    }
+
+    private Student getStudentFromReq(HttpServletRequest request) {
+        String fullname =  request.getParameter("fullname");
+        int age = Integer.parseInt( request.getParameter("age") );
+        int year = Integer.parseInt( request.getParameter("year") );
+        String description =  request.getParameter("description");
+        Student studentNew = new Student(0, fullname, age, year, description);
+        return studentNew;
     }
 }

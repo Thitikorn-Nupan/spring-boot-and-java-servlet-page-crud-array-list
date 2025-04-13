@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-// *** @WebServlet annotation work same @Controller
-// *** doGet,Post,Put,... work same @Get,Post,Put,...Mapping
+// *** @WebServlet annotation work same @Controller *** doGet,doPost,doPut,... work same @Get,Post,Put,...Mapping
 @WebServlet(
         urlPatterns = {"/logout"},
         name = "LogoutWebServletControl" // name work as bean's name
@@ -27,7 +26,7 @@ public class LogoutWebServletControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        req.getSession().invalidate(); // claer sess
+        req.getSession().invalidate(); // clear session why this session can't see on inspect browser ?
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
 

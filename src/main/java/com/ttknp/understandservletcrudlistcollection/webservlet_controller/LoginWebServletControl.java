@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-// *** @WebServlet annotation work same @Controller
-// *** doGet,Post,Put,... work same @Get,Post,Put,...Mapping
+// *** @WebServlet annotation work same @Controller *** doGet,doPost,doPut,... work same @Get,Post,Put,...Mapping
 @WebServlet(
         urlPatterns = {"/login"},
         name = "LoginWebServletControl" // name work as bean's name

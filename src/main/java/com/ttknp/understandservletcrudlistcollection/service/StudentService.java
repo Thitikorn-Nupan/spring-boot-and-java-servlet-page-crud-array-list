@@ -6,41 +6,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentService {
-    private List<Student> studentList = new ArrayList();
+
+    private List<Student> studentList;
 
     public StudentService() {
-        this.studentList.add(new Student(1, "Peter Parker", 20, 3, "Be real"));
-        this.studentList.add(new Student(2, "Mark Sli", 22, 3, "Anything god was build"));
-        this.studentList.add(new Student(3, "Don Ryder", 22, 3, "Try to be a good person"));
+        studentList = new ArrayList<>();
+        studentList.add(new Student(1, "Peter Parker", 20, 3, "Be real"));
+        studentList.add(new Student(2, "Mark Sli", 22, 3, "Anything god was build"));
+        studentList.add(new Student(3, "Don Ryder", 22, 3, "Try to be a good person"));
     }
 
     public List<Student> getStudentList() {
-        return this.studentList;
+        return studentList;
     }
 
     public boolean deleteStudent(int id) {
-        for(Student student : this.studentList) {
+        for(Student student : studentList) {
             if (student.getId() == id) {
-                this.studentList.remove(student);
+                studentList.remove(student);
                 return true;
             }
         }
-
         return false;
     }
 
     public Student getStudentById(int id) {
-        for(Student student : this.studentList) {
+        for(Student student : studentList) {
             if (student.getId() == id) {
                 return student;
             }
         }
-
         return null;
     }
 
     public boolean updateStudent(Student studentNew, int id) {
-        for(Student studentHold : this.studentList) {
+        for(Student studentHold : studentList) {
             if (studentHold.getId() == id) {
                 studentHold.setFullname(studentNew.getFullname());
                 studentHold.setAge(studentNew.getAge());
@@ -54,7 +54,7 @@ public class StudentService {
     }
 
     public boolean addStudent(Student studentNew) {
-        this.studentList.add(studentNew);
+        studentList.add(studentNew);
         return true;
     }
 }

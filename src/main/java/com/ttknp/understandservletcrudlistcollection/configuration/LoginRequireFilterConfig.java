@@ -9,14 +9,19 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/students.table"})
+@WebFilter(urlPatterns = {"/students.table","/students"})
 public class LoginRequireFilterConfig implements Filter {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private Logger logger ;
+
+    public LoginRequireFilterConfig() {
+        logger = LoggerFactory.getLogger(this.getClass());
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
         logger.debug("filter init");
-
     }
 
     @Override

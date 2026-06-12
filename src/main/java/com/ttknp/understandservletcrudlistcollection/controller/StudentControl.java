@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +43,6 @@ public class StudentControl {
         } else if ((body.get("code")).equals("add")) {
             modelAndView.setViewName("student_form_add");
         }
-
         return modelAndView;
     }
 
@@ -72,7 +70,6 @@ public class StudentControl {
         } else {
             logger.info("Failed to edit student with id {}", id);
         }
-
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
@@ -89,7 +86,6 @@ public class StudentControl {
         } else {
             logger.info("Failed to added student ");
         }
-
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
@@ -99,7 +95,6 @@ public class StudentControl {
         int age = Integer.parseInt(body.get("age"));
         int year = Integer.parseInt(body.get("year"));
         String description = body.get("description");
-        Student studentNew = new Student(0, fullname, age, year, description);
-        return studentNew;
+        return new Student(0, fullname, age, year, description);
     }
 }

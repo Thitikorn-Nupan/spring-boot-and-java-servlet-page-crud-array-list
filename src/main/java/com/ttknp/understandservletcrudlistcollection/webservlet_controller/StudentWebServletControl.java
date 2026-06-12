@@ -9,19 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 // *** @WebServlet annotation work same @Controller *** doGet,doPost,doPut,... work same @Get,Post,Put,...Mapping
 @WebServlet(
-        urlPatterns = {"/students.table","/students"},
+        urlPatterns = {"/students.table", "/students"},
         name = "StudentWebServletControl" // name work as bean's name
 )
 public class StudentWebServletControl extends HttpServlet {
@@ -74,7 +66,9 @@ public class StudentWebServletControl extends HttpServlet {
                     .forward(request, response);
         }
         if (code.equals("form")) {
-            request.getRequestDispatcher("/WEB-INF/views/student_form_add.jsp").forward(request, response);
+            request
+                    .getRequestDispatcher("/WEB-INF/views/student_form_add.jsp")
+                    .forward(request, response);
         }
         if (code.equals("update")) {
             doPut(request, response);
@@ -82,8 +76,7 @@ public class StudentWebServletControl extends HttpServlet {
         if (code.equals("delete")) {
             doDelete(request, response);
         }
-        if (code.equals("create")) {
-            // it's on http post
+        if (code.equals("create")) { // it's on http post
             Student studentNew = getStudentFromReq(request);
             studentService.addStudent(studentNew);
             response.sendRedirect("/students.table");
@@ -92,7 +85,7 @@ public class StudentWebServletControl extends HttpServlet {
 
     // Http PUT
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Student studentNew = getStudentFromReq(request);
         studentService.updateStudent(studentNew, id);
@@ -101,18 +94,17 @@ public class StudentWebServletControl extends HttpServlet {
 
     // Http DELETE
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         studentService.deleteStudent(id);
         resp.sendRedirect("/students.table");
     }
 
     private Student getStudentFromReq(HttpServletRequest request) {
-        String fullname =  request.getParameter("fullname");
-        int age = Integer.parseInt( request.getParameter("age") );
-        int year = Integer.parseInt( request.getParameter("year") );
-        String description =  request.getParameter("description");
-        Student studentNew = new Student(0, fullname, age, year, description);
-        return studentNew;
+        String fullname = request.getParameter("fullname");
+        int age = Integer.parseInt(request.getParameter("age"));
+        int year = Integer.parseInt(request.getParameter("year"));
+        String description = request.getParameter("description");
+        return new Student(0, fullname, age, year, description);
     }
 }

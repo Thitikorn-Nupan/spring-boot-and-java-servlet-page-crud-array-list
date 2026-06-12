@@ -6,13 +6,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/students.table","/students"})
 public class LoginRequireFilterConfig implements Filter {
 
-    private Logger logger ;
+    private final Logger logger ;
 
     public LoginRequireFilterConfig() {
         logger = LoggerFactory.getLogger(this.getClass());

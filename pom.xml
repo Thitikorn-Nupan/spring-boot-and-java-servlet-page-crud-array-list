@@ -40,7 +40,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
            <!--
             We should take special note that Undertow does not support JSP when used as an Embedded Servlet Container.
             Next, we need to include the tomcat-embed-jasper dependency to allow our application to compile and render JSP pages:
@@ -50,7 +49,6 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <version>10.1.18</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap
              good then cdn
          -->
@@ -59,14 +57,12 @@
             <artifactId>bootstrap</artifactId>
             <version>5.1.3</version>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

@@ -1,13 +1,12 @@
 package com.ttknp.understandservletcrudlistcollection.service;
 
 import com.ttknp.understandservletcrudlistcollection.entity.Student;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentService {
 
-    private List<Student> studentList;
+    private final List<Student> studentList;
 
     public StudentService() {
         studentList = new ArrayList<>();
@@ -49,7 +48,6 @@ public class StudentService {
                 return true;
             }
         }
-
         return false;
     }
 

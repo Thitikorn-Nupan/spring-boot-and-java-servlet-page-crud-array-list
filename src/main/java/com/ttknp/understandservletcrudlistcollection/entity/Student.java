@@ -1,6 +1,7 @@
 package com.ttknp.understandservletcrudlistcollection.entity;
 
 public class Student {
+
     private int id;
     private String fullname;
     private int age;
@@ -13,6 +14,9 @@ public class Student {
         this.age = age;
         this.year = year;
         this.description = description;
+    }
+
+    public Student() {
     }
 
     public int getId() {

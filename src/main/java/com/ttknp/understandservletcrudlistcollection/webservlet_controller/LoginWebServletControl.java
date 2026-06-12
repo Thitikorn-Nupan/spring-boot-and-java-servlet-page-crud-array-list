@@ -1,7 +1,5 @@
 package com.ttknp.understandservletcrudlistcollection.webservlet_controller;
 
-import com.ttknp.understandservletcrudlistcollection.entity.Student;
-import com.ttknp.understandservletcrudlistcollection.service.StudentService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 // *** @WebServlet annotation work same @Controller *** doGet,doPost,doPut,... work same @Get,Post,Put,...Mapping
@@ -19,7 +16,7 @@ import java.io.IOException;
 )
 public class LoginWebServletControl extends HttpServlet {
 
-    private Logger logger;
+    private final Logger logger;
 
     public LoginWebServletControl() {
         logger = LoggerFactory.getLogger(LoginWebServletControl.class);
@@ -38,12 +35,8 @@ public class LoginWebServletControl extends HttpServlet {
         if (emailAsParam.equals("ttknp@hotmail.com") && passwordParam.equals("12345")) {
             req.getSession().setAttribute("email", emailAsParam);
             resp.sendRedirect("/students.table");
-        }
-        else {
+        } else {
             resp.sendRedirect("/login");
         }
-
     }
-
-
 }
